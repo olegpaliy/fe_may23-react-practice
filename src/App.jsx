@@ -123,6 +123,11 @@ export const App = () => {
 
             <div className="panel-block">
               <a
+                onClick={() => {
+                  setProduct(product);
+                  setQuery('');
+                  setSelected(undefined);
+                }}
                 data-cy="ResetAllButton"
                 href="#/"
                 className="button is-link is-outlined is-fullwidth"
@@ -134,9 +139,11 @@ export const App = () => {
         </div>
 
         <div className="box table-container">
+          {product.length === 0 && (
           <p data-cy="NoMatchingMessage">
             No products matching selected criteria
           </p>
+          )}
 
           <table
             data-cy="ProductTable"
