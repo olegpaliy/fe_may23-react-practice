@@ -73,7 +73,7 @@ export const App = () => {
             <div className="panel-block">
               <p className="control has-icons-left has-icons-right">
                 <input
-                  onChange={event => setQuery(event.target.value)}
+                  onChange={event => setQuery(event.target.value.toLowerCase())}
                   data-cy="SearchField"
                   type="text"
                   className="input"
@@ -192,25 +192,27 @@ export const App = () => {
             </thead>
 
             <tbody>
-              {product.map(item => (
-                <tr key={item.id} data-cy="Product">
-                  <td className="has-text-weight-bold" data-cy="ProductId">
-                    {item.id}
-                  </td>
+              {product
+                .filter(per => per.name.toLowerCase().includes(query))
+                .map(item => (
+                  <tr key={item.id} data-cy="Product">
+                    <td className="has-text-weight-bold" data-cy="ProductId">
+                      {item.id}
+                    </td>
 
-                  <td data-cy="ProductName">{item.name}</td>
-                  <td data-cy="ProductCategory">{`${item.img} - ${item.categoryName}`}</td>
+                    <td data-cy="ProductName">{item.name}</td>
+                    <td data-cy="ProductCategory">{`${item.img} - ${item.categoryName}`}</td>
 
-                  <td
-                    data-cy="ProductUser"
-                    className={item.userGender === 'm'
-                      ? 'has-text-link'
-                      : 'has-text-danger'}
-                  >
-                    {item.userName}
-                  </td>
-                </tr>
-              ))}
+                    <td
+                      data-cy="ProductUser"
+                      className={item.userGender === 'm'
+                        ? 'has-text-link'
+                        : 'has-text-danger'}
+                    >
+                      {item.userName}
+                    </td>
+                  </tr>
+                ))}
 
             </tbody>
           </table>
