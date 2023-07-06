@@ -21,6 +21,18 @@ const products = productsFromServer.map((product) => {
 
 export const App = () => {
   const [query, setQuery] = useState('');
+  const [product, setProduct] = useState(products);
+  const [selected, setSelected] = useState(undefined);
+
+  const filterByOwner = (owner) => {
+    if (owner) {
+      setProduct(products.filter(item => item.userName === owner.name));
+      setSelected(owner.id);
+    } else {
+      setProduct(products);
+      setSelected(undefined);
+    }
+  };
 
   return (
     <div className="section">
@@ -33,15 +45,23 @@ export const App = () => {
 
             <p className="panel-tabs has-text-weight-bold">
               <a
+                onClick={() => {
+                  filterByOwner();
+                }}
                 data-cy="FilterAllUsers"
                 href="#/"
+                className={!selected ? 'is-active' : ''}
               >
                 All
               </a>
 
               {usersFromServer.map(item => (
                 <a
+                  onClick={() => {
+                    filterByOwner(item);
+                  }}
                   key={item.id}
+                  className={item.id === selected ? 'is-active' : ''}
                   data-cy="FilterUser"
                   href={`#${item.name}`}
                 >
@@ -172,7 +192,7 @@ export const App = () => {
             </thead>
 
             <tbody>
-              {products.map(item => (
+              {product.map(item => (
                 <tr key={item.id} data-cy="Product">
                   <td className="has-text-weight-bold" data-cy="ProductId">
                     {item.id}
