@@ -124,7 +124,7 @@ export const App = () => {
             <div className="panel-block">
               <a
                 onClick={() => {
-                  setProduct(product);
+                  setProduct(products);
                   setQuery('');
                   setSelected(undefined);
                 }}
